@@ -36,16 +36,22 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped table-responsive" width="100%">
                   <thead>
                     <tr>
                             
-                        <th >SL</th>
-                        <th >Date</th>
-                        <th >Purchase No</th>
-                        <th >Product Name</th>
-                        <th >Unit Name</th>
-                        <th >Action</th>
+                      <th >SL.</th>
+                      <th >Purchase No</th>
+                      <th >Date</th>
+                      <th >Supplier Name</th>
+                      <th >Category</th>
+                      <th >Product Name</th>
+                      <th >Description</th>
+                      <th >Quantity</th>
+                      <th >Unit Price</th>
+                      <th >Buying Price</th>
+                      <th >Status</th>
+                      <th style='width:15%'>Action</th>
                        
                     </tr>
                   
@@ -54,15 +60,32 @@
                           @foreach($alldata as $key=> $purchase)
                           <tr>
                             <td>{{++$key}}</td>
-                            <td>{{$purchase->date}}</td>
                             <td>{{$purchase->purchase_no}}</td>
-                          <td>{{$purchase['product']['name']}}</td>
-                            <td>{{$purchase['unit']['name']}}</td>
+                            <td>{{$purchase->date}}</td>
+                            <td>{{$purchase['supplier']['name']}}</td>
+                            <td>{{$purchase['category']['name']}}</td>
+                            <td>{{$purchase['product']['name']}}</td>
+                            <td>{{$purchase->description}}</td>
+                            <td>{{$purchase->buying_qty}}
+                            {{$purchase['product']['unit']['name']}}
+
+                            </td>
+                            <td>{{$purchase->unit_price}}</td>
+                            <td>{{$purchase->buying_price}}</td>
+                        <td>
+
+                          @if($purchase->status=='1')
+                          <span style="background-color:#0296F6"> Approve</span>
+                          @elseif($purchase->status=='0')
+                          <span style="background-color:red">Pending</span>
+                          @endif
+
+                         </td>
                             
                             
                            <td>
 
-                              <a title="edit" class="btn btn-sm btn-primary"href="{{route('purchase.edit',$purchase->id)}}"><i class="fa fa-edit"></i></a>
+                              <a title="edit" class="btn btn-sm btn-primary"href="{{route('purchases.edit',$purchase->id)}}"><i class="fa fa-edit"></i></a>
 
 
                               <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$purchase->id}}"><i class="fa fa-trash"></i></a>
@@ -83,7 +106,7 @@
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                        <a class="btn btn-md btn-danger" href="{{route('purchase.delete',$purchase->id)}}">Delete</a>
+                        <a class="btn btn-md btn-danger" href="{{route('purchases.delete',$purchase->id)}}">Delete</a>
                             
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                   

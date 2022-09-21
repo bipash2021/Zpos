@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('supplier_id');
-            $table->integer('category_id');
-            $table->integer('product_id');
-            $table->integer('purchase_no');
+            $table->Integer('supplier_id');
+
+            $table->Integer('product_id');
+            $table->Integer('category_id');
+
+            $table->string('purchase_no');
             $table->date('date');            
             $table->string('description')->nullable();            
             $table->double('buying_qty');

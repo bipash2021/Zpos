@@ -89,6 +89,7 @@
                     <!-- card-body -->
                     <div class="card-body">
                       <form action="{{route('purchases.store')}}" method="POST" enctype="multipart/from-data" id="myform">
+                        @csrf
                         <table id="" class="table table-bordered table-sm" width="100%">
                   <thead>
                     <tr>
@@ -145,15 +146,15 @@
 
         <script id="document-template"   type="text/x-handlebar-template">
           <tr class="delete_add_more_item" id="delete_add_more_item">
-            <input type="hidden" name="date[]" value=@{{date}}">
+            <input type="hidden" name="date[]" value="@{{date}}">
 
-            <input type="hidden" name="purchase_no[]" value=@{{purchase_no}}">
+            <input type="hidden" name="purchase_no[]" value="@{{purchase_no}}">
 
-            <input type="hidden" name="supplier_id[]" value=@{{supplier_id}}">
+            <input type="hidden" name="supplier_id[]" value="@{{supplier_id}}">
 
-            <td> <input type="hidden" name="category_id[]" value=@{{category_id}}">@{{category_name}}</td>
+            <td> <input type="hidden" name="category_id[]" value="@{{category_id}}">@{{category_name}}</td>
 
-            <td> <input type="hidden" name="product_id[]" value=@{{product_id}}">@{{product_name}}</td>
+            <td> <input type="hidden" name="product_id[]" value="@{{product_id}}">@{{product_name}}</td>
 
 
             <td> <input type="number" min="1" name="buying_qty[]" class="form-control form-control-sm text-right buying_qty"   value="1"></td>
