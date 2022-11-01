@@ -18,7 +18,7 @@ class PurchaseController extends Controller
 {
     public function view(){ 
 
-   $data['alldata']=Purchase::all();
+   $data['alldata']=Purchase::orderBy('date','desc')->orderBy('id','desc')->get();
    return view('backend.purchases.view_purchase',$data);
      }
 
@@ -36,15 +36,15 @@ class PurchaseController extends Controller
 
 
 
-    	if($request->category_id == null){
-        return redirect()->back()->with('errors','Sorry! You do not select any item');
+
+    	if($request->category_id == null ){
+        return redirect()->back()->with('success','Sorry! You do not select any item');
 
         }
+           else
 
-        else
 
         {
-
             $count_category = count($request->category_id);
             for ($i=0; $i< $count_category ; $i++) { 
                 $purchase=new Purchase();
@@ -114,6 +114,33 @@ class PurchaseController extends Controller
     $purchase->delete();
 
     return redirect()->back()->with('success','purchases deleted successfully');
+
+    }
+
+    public function pendingList(){
+
+       $data['alldata']=Purchase::orderBy('date','desc')->orderBy('id','desc')->where('status','0')->get();
+
+       return view('backend.purchases.view_pending_list',$data);
+
+
+
+    }
+
+    public function approve($id){
+
+       $purchase=Purchase::find($id);
+       $product= Product::where('id',$purchase->product_id)->first();
+       $purchase_qty=((float)($purchase->buying_qty))+((float)($product->quantity));
+       $product->quantity=$purchase_qty;
+       If($product->save()){
+        DB::table('purchases')
+        ->where('id',$id)->update(['status'=>1]);
+       }
+
+           return redirect()->route('purchases.view')->with('success','purchase Approved successfully');
+
+
 
     }
 }

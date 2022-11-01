@@ -95,17 +95,42 @@ Route::prefix('purchases')->group(function(){
 Route::get('/view', [App\Http\Controllers\Backend\PurchaseController::class, 'view'])->name('purchases.view');
 Route::get('/add', [App\Http\Controllers\Backend\PurchaseController::class, 'add'])->name('purchases.add');
 Route::post('/store', [App\Http\Controllers\Backend\PurchaseController::class, 'store'])->name('purchases.store');
-Route::get('/edit/{id}', [App\Http\Controllers\Backend\PurchaseController::class, 'edit'])->name('purchases.edit');
-Route::post('/update/{id}', [App\Http\Controllers\Backend\PurchaseController::class, 'update'])->name('purchases.update');
+Route::get('/pending', [App\Http\Controllers\Backend\PurchaseController::class, 'pendingList'])->name('purchases.pending.list');
+Route::get('/approve/{id}', [App\Http\Controllers\Backend\PurchaseController::class, 'approve'])->name('purchases.approve');
 Route::get('/delete/{id}', [App\Http\Controllers\Backend\PurchaseController::class, 'delete'])->name('purchases.delete');
 
 });
 
+
+Route::prefix('invoices')->group(function(){
+
+Route::get('/view', [App\Http\Controllers\Backend\InvoiceController::class, 'view'])->name('invoices.view');
+Route::get('/add', [App\Http\Controllers\Backend\InvoiceController::class, 'add'])->name('invoices.add');
+Route::post('/store', [App\Http\Controllers\Backend\InvoiceController::class, 'store'])->name('invoices.store');
+Route::get('/pending', [App\Http\Controllers\Backend\InvoiceController::class, 'pendingList'])->name('invoices.pending.list');
+Route::get('/approve/{id}', [App\Http\Controllers\Backend\InvoiceController::class, 'approve'])->name('invoices.approve');
+Route::get('/delete/{id}', [App\Http\Controllers\Backend\InvoiceController::class, 'delete'])->name('invoices.delete');
+
+Route::post('/approve/store/{id}', [App\Http\Controllers\Backend\InvoiceController::class, 'approveStore'])->name('approve.store');
+
+Route::get('/print/list', [App\Http\Controllers\Backend\InvoiceController::class, 'printInvoiceList'])->name('invoices.print.list');
+
+Route::get('/print/{id}', [App\Http\Controllers\Backend\InvoiceController::class, 'printInvoice'])->name('invoices.print');
+
+
+});
+
+
+// For Ajax
 Route::get('/get-category', [App\Http\Controllers\Backend\DefaultController::class, 'getCategory'])->name('get-category');
 
 
 
 Route::get('/get-product', [App\Http\Controllers\Backend\DefaultController::class, 'getProduct'])->name('get-product');
+
+
+Route::get('/get-stock', [App\Http\Controllers\Backend\DefaultController::class, 'getStock'])->name('check-product-stock');
+
 
 
 });

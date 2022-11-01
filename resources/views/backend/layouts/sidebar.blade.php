@@ -147,6 +147,56 @@ $route=Route::current()->getName();
         </li>
         
       </ul>
+
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{route('purchases.pending.list')}}" class="nav-link {{($route=='purchases.pending.list')?'active':''}}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Approval purchases</p>
+          </a>
+        </li>
+        
+      </ul>
+    </li>
+
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        
+        <p>
+          Manage Invoices
+          <i class="fas fa-angle-left right"></i>
+          
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{route('invoices.view')}}" class="nav-link {{($route=='invoices.view')?'active':''}}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>View Invoices</p>
+          </a>
+        </li>
+        
+      </ul>
+
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{route('invoices.pending.list')}}" class="nav-link {{($route=='invoices.pending.list')?'active':''}}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Approval invoice</p>
+          </a>
+        </li>
+        
+      </ul>
+
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{route('invoices.print.list')}}" class="nav-link {{($route=='invoices.print.list')?'active':''}}">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Print Invoice</p>
+          </a>
+        </li>
+        
+      </ul>
     </li>
   </ul>
 </nav>

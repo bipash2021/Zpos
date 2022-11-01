@@ -47,11 +47,15 @@
                           <tr>
                             <td>{{++$key}}</td>
                             <td>{{$unit->name}}</td>
-                            
+                             @php
+                            $count_unit=App\Models\Product::where('unit_id',$unit->id)->count();
+                            @endphp
                             
                             <td>
                               <a title="edit" class="btn btn-sm btn-primary"href="{{route('units.edit',$unit->id)}}"><i class="fa fa-edit"></i></a>
+                              @if($count_unit<1)
                               <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$unit->id}}"><i class="fa fa-trash"></i></a>
+                              @endif
                               <!-- Button to Open the Modal -->
                               <!-- The Modal -->
                               <div class="modal" id="myModal{{$unit->id}}">

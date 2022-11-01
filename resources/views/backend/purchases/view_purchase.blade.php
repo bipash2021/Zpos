@@ -84,11 +84,11 @@
                             
                             
                            <td>
-
-                              <a title="edit" class="btn btn-sm btn-primary"href="{{route('purchases.edit',$purchase->id)}}"><i class="fa fa-edit"></i></a>
-
+                            @if($purchase->status=="0")
 
                               <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$purchase->id}}"><i class="fa fa-trash"></i></a>
+
+                            @endif
                           <!-- Button to Open the Modal -->
 
                           <!-- The Modal -->

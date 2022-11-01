@@ -9,12 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Products</h1>
+            <h1 class="m-0">Manage Purchase</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">product </li>
+              <li class="breadcrumb-item active">purchase</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,52 +30,69 @@
              <div class="card">
               <div class="card-header">
 
-                <h3>Products List
-                      <a class="btn btn-primary btn-sm float-right" href="{{route('products.add')}}"> <i class="fa fa-plus-circle">Add Product </i></a>
+                <h3>Purchase List
+                      <a class="btn btn-primary btn-sm float-right" href="{{route('purchases.add')}}"> <i class="fa fa-plus-circle">Add Purchase</i></a>
                       </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped table-responsive" width="100%">
                   <thead>
                     <tr>
                             
-                        <th >SL</th>
-                        <th >Supplier Name</th>
-                        <th >Category</th>
-                        <th >Unit</th>
-                        <th >Name</th>
-                        <th >Action</th>
+                      <th >SL.</th>
+                      <th >Purchase No</th>
+                      <th >Date</th>
+                      <th >Supplier Name</th>
+                      <th >Category</th>
+                      <th >Product Name</th>
+                      <th >Description</th>
+                      <th >Quantity</th>
+                      <th >Unit Price</th>
+                      <th >Buying Price</th>
+                      <th >Status</th>
+                      <th style='width:15%'>Action</th>
                        
                     </tr>
                   
                   </thead>
                    <tbody>
-                          @foreach($alldata as $key=> $product)
+                          @foreach($alldata as $key=> $purchase)
                           <tr>
                             <td>{{++$key}}</td>
-                            <td>{{$product['supplier']['name']}}</td>
-                            <td>{{$product['category']['name']}}</td>
-                            <td>{{$product['unit']['name']}}</td>
-                            <td>{{$product->name}}</td>
-                             @php
-                       $count_product=App\Models\Purchase::where('product_id',$product->id)->count();
-                            @endphp
+                            <td>{{$purchase->purchase_no}}</td>
+                            <td>{{$purchase->date}}</td>
+                            <td>{{$purchase['supplier']['name']}}</td>
+                            <td>{{$purchase['category']['name']}}</td>
+                            <td>{{$purchase['product']['name']}}</td>
+                            <td>{{$purchase->description}}</td>
+                            <td>{{$purchase->buying_qty}}
+                            {{$purchase['product']['unit']['name']}}
+
+                            </td>
+                            <td>{{$purchase->unit_price}}</td>
+                            <td>{{$purchase->buying_price}}</td>
+                        <td>
+
+                          @if($purchase->status=='1')
+                          <span style="background-color:#0296F6"> Approve</span>
+                          @elseif($purchase->status=='0')
+                          <span style="background-color:red">Pending</span>
+                          @endif
+
+                         </td>
                             
                             
                            <td>
+                            @if($purchase->status=="0")
 
-                              <a title="edit" class="btn btn-sm btn-primary"href="{{route('products.edit',$product->id)}}"><i class="fa fa-edit"></i></a>
+                              <a title="approve" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal{{$purchase->id}}"><i class="fa fa-check-circle"></i></a>
 
-                              @if($count_product<1)
-
-                              <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$product->id}}"><i class="fa fa-trash"></i></a>
-                              @endif
-                           
+                            @endif
                           <!-- Button to Open the Modal -->
 
                           <!-- The Modal -->
-                        <div class="modal" id="myModal{{$product->id}}">
+                        <div class="modal" id="myModal{{$purchase->id}}">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <!-- Modal Header -->
@@ -85,11 +102,11 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                  Are You Sure Want to DELETE {{$product->name}}?
+                                  Are You Sure Want to Approve {{$purchase->name}}?
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                            <a class="btn btn-md btn-danger" href="{{route('products.delete',$product->id)}}">Delete</a>
+                        <a class="btn btn-md btn-danger" href="{{route('purchases.approve',$purchase->id)}}">Yes,Approve It</a>
                             
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                   

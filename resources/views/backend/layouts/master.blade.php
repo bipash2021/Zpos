@@ -36,6 +36,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+      <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
+
 
     <style type="text/css">
 
@@ -230,11 +235,14 @@
    <script src="{{asset('plugins/jquery-validation/jquery.validate.min.js')}}"></script>
    <script src="{{asset('plugins/jquery-validation/additional-methods.min.js')}}"></script>
 
+   <!-- Select2 -->
+   <script src="{{asset('plugins/select2/js/select2.full.min.js')}}"></script>
+
     <script>
   $(function () {
     $("#example1").DataTable({
        "lengthChange": true, "autoWidth": true,
-      "buttons": ["copy", "csv", "excel", "pdf", "print",]
+      "buttons": ["copy", "csv", "excel",]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     
   });
@@ -284,5 +292,14 @@ $(function () {
   });
 });
 </script> -->
+<script type="text/javascript">
+  
+  $(function(){
+   //Initialize Select2 Elements
+    $('.select2').select2()
+
+    })
+
+</script>
   </body>
 </html>

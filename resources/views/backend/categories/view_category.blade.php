@@ -47,11 +47,16 @@
                           <tr>
                             <td>{{++$key}}</td>
                             <td>{{$Category->name}}</td>
-                            
+                             @php
+                             $count_category=App\Models\Product::where('category_id',$Category->id)->count();
+                             @endphp
                             
                             <td>
                           <a title="edit" class="btn btn-sm btn-primary"href="{{route('categories.edit',$Category->id)}}"><i class="fa fa-edit"></i></a>
+
+                             @if($count_category<1)
                               <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$Category->id}}"><i class="fa fa-trash"></i></a>
+                              @endif
                               <!-- Button to Open the Modal -->
                               <!-- The Modal -->
                               <div class="modal" id="myModal{{$Category->id}}">

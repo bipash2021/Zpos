@@ -9,12 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Manage Products</h1>
+            <h1 class="m-0">Manage Invoice</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">product </li>
+              <li class="breadcrumb-item active">invoice</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,52 +30,67 @@
              <div class="card">
               <div class="card-header">
 
-                <h3>Products List
-                      <a class="btn btn-primary btn-sm float-right" href="{{route('products.add')}}"> <i class="fa fa-plus-circle">Add Product </i></a>
+                <h3>Pending Invoice List
                       </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped " width="100%" >
                   <thead>
                     <tr>
                             
-                        <th >SL</th>
-                        <th >Supplier Name</th>
-                        <th >Category</th>
-                        <th >Unit</th>
-                        <th >Name</th>
-                        <th >Action</th>
+                      <th >SL.</th>
+                      <th >Customer Name</th>
+                      <th >Invoice No</th>
+                      <th >Date</th>
+                      <th >Description</th>
+                      <th >Amount</th>
+                      <th >Status</th>
+                      <th style='width:15%'>Action</th>
                        
                     </tr>
                   
                   </thead>
                    <tbody>
-                          @foreach($alldata as $key=> $product)
+                          @foreach($alldata as $key=> $invoice)
                           <tr>
+
                             <td>{{++$key}}</td>
-                            <td>{{$product['supplier']['name']}}</td>
-                            <td>{{$product['category']['name']}}</td>
-                            <td>{{$product['unit']['name']}}</td>
-                            <td>{{$product->name}}</td>
-                             @php
-                       $count_product=App\Models\Purchase::where('product_id',$product->id)->count();
-                            @endphp
+                            <td>{{$invoice['payment']['customer']['name']}}</td>
+                            <td>Invoice No#{{$invoice->invoice_no}}</td>
+                            <td>{{date('Y-m-d',strtotime($invoice->date))}}</td>
+                            <td>{{$invoice->description}}</td>
+                            <td>{{$invoice['payment']['total_amount']}}</td>
+
+                        <td>
+
+                          @if($invoice->status=='1')
+                          <span style="background-color:#0296F6"> Approve</span>
+                          @elseif($invoice->status=='0')
+                          <span style="background-color:red">Pending</span>
+                          @endif
+
+                         </td>
                             
                             
                            <td>
+                            @if($invoice->status=="0")
 
-                              <a title="edit" class="btn btn-sm btn-primary"href="{{route('products.edit',$product->id)}}"><i class="fa fa-edit"></i></a>
+                              <a title="approve" class="btn btn-sm btn-primary" href="{{route('invoices.approve',$invoice->id)}}"><i class="fa fa-check-circle"></i></a>
 
-                              @if($count_product<1)
+                            @endif
 
-                              <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal{{$product->id}}"><i class="fa fa-trash"></i></a>
-                              @endif
-                           
+                          
+                          <!-- for delete -->
+                           @if($invoice->status=="0")
+
+                              <a title="delete" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModalDelete{{$invoice->id}}"><i class="fa fa-trash"></i></a>
+
+                            @endif
                           <!-- Button to Open the Modal -->
 
                           <!-- The Modal -->
-                        <div class="modal" id="myModal{{$product->id}}">
+                        <div class="modal" id="myModalDelete{{$invoice->id}}">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <!-- Modal Header -->
@@ -85,11 +100,11 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="modal-body">
-                                  Are You Sure Want to DELETE {{$product->name}}?
+                                  Are You Sure Want to DELETE {{$invoice->name}}?
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                            <a class="btn btn-md btn-danger" href="{{route('products.delete',$product->id)}}">Delete</a>
+                        <a class="btn btn-md btn-danger" href="{{route('invoices.delete',$invoice->id)}}">Delete</a>
                             
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                   
